@@ -59,9 +59,9 @@ mv node-v$VERSION-linux-x64/ nodejs-linux/
 rm $FILENAME
 
 if [ "$OLD_VERSION" == "" ]; then
-	echo "export PATH=/home/$USERNAME/nodejs-linux/bin/:\$PATH">>~/.bashrc
+	echo -e "# NodeJS\nexport PATH=/home/$USERNAME/nodejs-linux/bin/:\$PATH">>~/.bashrc
 	echo "Done. (Please restart your bash to use node)"
-else if [ "$OLD_VERSION" == "$VERSION" ]; then
+elif [ "$OLD_VERSION" == "$VERSION" ]; then
 	echo "Done. (Version reinstalled)"
 else
 	echo "Done. (v$OLD_VERSION -> v$VERSION)"
