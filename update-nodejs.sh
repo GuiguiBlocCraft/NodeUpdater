@@ -53,13 +53,19 @@ fi
 echo "Uncompressing node-v$VERSION.tar.gz..."
 tar -xzf $FILENAME
 
-echo "Removing old version..."
-rm -R nodejs-linux/
-mv node-v$VERSION-linux-x64/ nodejs-linux/
+PATH_INSTALL=nodejs-linux/
+
+if [ -d $PATH_INSTALL ]; then
+	echo "Removing old version..."
+	rm -R $PATH_INSTALL
+fi
+
+echo "Finishing..."
+mv node-v$VERSION-linux-$PROC/ $PATH_INSTALL
 rm $FILENAME
 
 if [ "$OLD_VERSION" == "" ]; then
-	echo -e "# NodeJS\nexport PATH=/home/$USERNAME/nodejs-linux/bin/:\$PATH">>~/.bashrc
+	echo -e "# NodeJS\nexport PATH=/home/$USER/nodejs-linux/bin/:\$PATH">>~/.bashrc
 	echo "Done. (Please restart your bash to use node)"
 elif [ "$OLD_VERSION" == "$VERSION" ]; then
 	echo "Done. (Version reinstalled)"
