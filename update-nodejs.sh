@@ -3,15 +3,19 @@ case $1 in
 	"--force" | "-f")
 	FORCE=1
 	;;
+
 	"--help" | "-h" | "-?")
 	echo "Script bash by GuiguiBlocCraft"
+	echo "                       v0.1.0"
 	echo "===== An NodeJS updater ======"
 	echo
-	echo "--force (or -f)     Force download without check current version of Node"
-	echo "--help (or -h)      Display this help"
-	echo "--version (or -v)   Download a version"
+	echo "--force (or -f)        Force download without check current version of Node"
+	echo "--help (or -h)         Display this help"
+	echo "--version (or -v)      Download a version"
+	echo "--notprompt (or -np)   Not prompt for install or update"
 	exit 1
 	;;
+
 	"--version" | "-v")
 	if [ "$2" == "" ]; then
 		echo "Usage: $0 --version VERSION"
@@ -19,6 +23,11 @@ case $1 in
 	fi
 
 	VERSION=$(echo $2 | cut -d"v" -f2)
+	FORCE=1
+	;;
+
+	"--notprompt" | "-np")
+	NOPROMPT=1
 	;;
 esac
 
@@ -36,6 +45,24 @@ if [ "$FORCE" == "" ]; then
 	if [ "$VERSION" == "$OLD_VERSION" ]; then
 		echo "No update available"
 		exit 0
+	else
+		# Prompt to install/update
+		while [[ "$NOPROMPT" == "" ]]; do
+			if [ "$OLD_VERSION" == "" ]; then
+				echo "Node is not installed or not detected in the path."
+				echo -n "Do you want to install v$VERSION of NodeJS in your local session? (Y/N)"
+			else
+				echo -n "An update for $VERSION is available! Do you want to update? (Y/N)"
+			fi
+
+			read INPUT
+			if [[ ${INPUT^^} == 'Y' ]]; then
+				break
+			elif [[ ${INPUT^^} == 'N' ]]; then
+				echo "Cancelling by user"
+				exit
+			fi
+		done
 	fi
 fi
 
@@ -51,7 +78,7 @@ if [[ $? -gt 0 ]]; then
 fi
 
 echo "Uncompressing node-v$VERSION.tar.gz..."
-tar -xzf $FILENAME
+tar -xzf $FILENAME -C ~/
 
 PATH_INSTALL=nodejs-linux/
 
