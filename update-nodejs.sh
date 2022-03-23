@@ -5,7 +5,7 @@ case $1 in
 	;;
 
 	"--help" | "-h" | "-?")
-	echo "Script bash by GuiguiBlocCraft"
+	echo "Bash script by GuiguiBlocCraft"
 	echo "                       v0.1.0"
 	echo "===== An NodeJS updater ======"
 	echo
