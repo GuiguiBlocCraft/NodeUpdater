@@ -1,9 +1,9 @@
 # NodeUpdater
-An updater of NodeJS
+*An updater for NodeJS written by GuiguiBlocCraft*
 
-This script check from the NodeJS official web site.
+This script in *bash* checks and install/update from the NodeJS official web site.
 
-Execute this, and it will download the latest version.
+By default, execute without argument will download the latest version.
 
 ## Options
 
