@@ -6,7 +6,7 @@ case $1 in
 
 	"--help" | "-h" | "-?")
 	echo "Bash script by GuiguiBlocCraft"
-	echo "                       v0.1.0"
+	echo "                       v0.1.1"
 	echo "===== An NodeJS updater ======"
 	echo
 	echo "--force (or -f)        Force download without check current version of Node"
@@ -47,12 +47,17 @@ if [ "$FORCE" == "" ]; then
 		exit 0
 	else
 		# Prompt to install/update
-		while [[ "$NOPROMPT" == "" ]]; do
+		while [ "$NOPROMPT" == "" ]; do
 			if [ "$OLD_VERSION" == "" ]; then
 				echo "Node is not installed or not detected in the path."
 				echo -n "Do you want to install v$VERSION of NodeJS in your local session? (Y/N)"
 			else
-				echo -n "An update for $VERSION is available! Do you want to update? (Y/N)"
+				if [ "$VERSION" != "" ]; then
+					echo -n "An update for $VERSION is available! Do you want to update? (Y/N)"
+				else
+					echo "Connection error: please check your connection before start script"
+					exit 3
+				fi
 			fi
 
 			read INPUT
