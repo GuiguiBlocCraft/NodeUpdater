@@ -7,6 +7,7 @@ By default, execute without argument will download the latest version.
 
 ## Options
 
+- `--download` (or `-d`) : Force download without check current version of Node
 - `--help` (or `-h`) : Display this help
-- `--force` (or `-f`) : Force download without check current version of Node
 - `--version` (or `-v`) : Download a version
+- `--noprompt` (or `-np`) : Not prompt for install or update
