@@ -1,9 +1,10 @@
 #!/bin/bash
 # Bash script developed by GuiguiBlocCraft
-# Version 0.2
+# Version 0.2.1
 
 # Settings
-PATH_INSTALL=.nodejs-exec/
+PATH_INSTALL=.nodejs-exec
+TYPE_VERSION=hydrogen
 
 # Displays
 YES_NO=\\x1B[1m\(Y/N\)\\x1B[0m
@@ -14,7 +15,7 @@ case $1 in
 	;;
 
 	"--help" | "-h" | "-?")
-	echo -e "   \x1B[1;32mNode\x1B[1;37m\x1B[1;37mJS Updater\x1B[0m v0.2"
+	echo -e "   \x1B[1;32mNode\x1B[1;37m\x1B[1;37mJS Updater\x1B[0m v0.2.1"
 	echo
 	echo "--force (or -f)        Force download without check current version of Node"
 	echo "--help (or -h)         Display this help"
@@ -54,7 +55,7 @@ if ($(command -v node >/dev/null 2>&1)); then
 fi
 
 if [ "$VERSION" == "" ]; then
-	CONTENT=$(curl --fail -s "https://nodejs.org/dist/latest-gallium/SHASUMS256.txt")
+	CONTENT=$(curl --fail -s "https://nodejs.org/dist/latest-$TYPE_VERSION/SHASUMS256.txt")
 	VERSION=$(echo -n "$CONTENT" | head -1 | cut -d' ' -f3 | cut -c7- | cut -d'-' -f1)
 else
 	CONTENT=$(curl --fail -s "https://nodejs.org/dist/v$VERSION/SHASUMS256.txt")
@@ -113,13 +114,13 @@ fi
 echo "Uncompressing node-v$VERSION.tar.gz..."
 tar -xzf $FILENAME -C ~/
 
-if [ -d $PATH_INSTALL ]; then
+if [ -d $PATH_INSTALL/ ]; then
 	echo "Removing old version..."
-	rm -R $PATH_INSTALL
+	rm -R $PATH_INSTALL/
 fi
 
 echo "Finishing..."
-mv node-v$VERSION-linux-$PROC/ $PATH_INSTALL
+mv node-v$VERSION-linux-$PROC/ $PATH_INSTALL/
 rm $FILENAME
 
 if [ "$OLD_VERSION" == "" ]; then
